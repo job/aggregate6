@@ -84,6 +84,10 @@ def aggregate(tree):
 
 def main():
     parser = argparse.ArgumentParser()
+    parser.add_argument('-m', dest='maximum_length', default=128,
+                        type=int, help="Sets  the maximum  prefix length \
+for entries read on input. The default is 128. Prefixes with longer lengths \
+will be discarded prior to processing.")
     parser.add_argument('-v', dest='version', action='store_true',
                         help="Display aggregate6 version")
     parser.add_argument('args', nargs=argparse.REMAINDER,
@@ -106,7 +110,9 @@ def main():
             sys.stderr.write("ERROR: '%s' is not a valid IPv6 network, \
     ignoring.\n" % elem.strip())
             continue
-        if IPNetwork(prefix).version == 6:
+        prefix_obj = IPNetwork(prefix)
+        if prefix_obj.version == 6 and \
+                prefix_obj.prefixlen <= args.maximum_length:
             p_tree.add(prefix)
 
     # keep optimising until the list cannot be smaller

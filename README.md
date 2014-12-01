@@ -43,6 +43,8 @@ lists of IPv6 prefixes as arguments.
     2000::/3
 ```
 
+See ```aggregate6 -h``` for a full list of options.
+
 BUGS
 ----
 
