@@ -84,9 +84,16 @@ def aggregate(tree):
 
 def main():
     parser = argparse.ArgumentParser()
+    parser.add_argument('-v', dest='version', action='store_true',
+                        help="Display aggregate6 version")
     parser.add_argument('args', nargs=argparse.REMAINDER,
                         help='<file> [ ... <file> ] or STDIN')
     args = parser.parse_args()
+
+    if args.version:
+        import aggregate6
+        print "aggregate6 %s" % aggregate6.__version__
+        sys.exit()
 
     p_tree = radix.Radix()
 
