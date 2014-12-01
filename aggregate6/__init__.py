@@ -1,0 +1,7 @@
+__version__ = "0.1"
+__author__ = "Job Snijders"
+__author_email__ = "job@ntt.net"
+__copyright__ = "Copyright 2014, Job Snijders"
+__license__ = "BSD 2-Clause"
+__status__ = "Development"
+__url__ = "https://github.com/job/aggregate6"
