@@ -18,6 +18,14 @@ a single, shorter-length prefix. For example, ```2001:67c:208c::/48``` and
 ```2001:67c:208d::/48``` can be combined into the single prefix
 2001:67c:208c::/47.
 
+INSTALLATION
+------------
+
+```
+    $ sudo apt-get install python-dev
+    $ sudo pip install aggregate6
+```
+
 USAGE
 -----
 
