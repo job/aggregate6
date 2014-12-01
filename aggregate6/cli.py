@@ -55,6 +55,9 @@ def aggregate(tree):
         # current prefix
         cp = IPNetwork(prefix)
         # fetch next prefix
+        if int(cp.broadcast) == 2 ** 128 - 1:
+            r_tree.add(str(cp))
+            continue
         np = IPNetwork(prefixes[prefixes.index(prefix) + 1])
         if cp.broadcast + 1 == np.network and cp.prefixlen == np.prefixlen:
                 larger = IPNetwork('%s/%s' % (cp.network, cp.prefixlen - 1))
