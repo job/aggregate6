@@ -25,9 +25,15 @@
 # ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
 # POSSIBILITY OF SUCH DAMAGE.
 
-import argparse
 import fileinput
 import sys
+
+try:
+    import argparse
+except ImportError:
+    print "ERROR: install argparse manually"
+    print "HINT: sudo pip install argparse"
+    sys.exit(2)
 
 try:
     from ipaddr import IPNetwork
