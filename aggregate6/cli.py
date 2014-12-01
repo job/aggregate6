@@ -1,5 +1,5 @@
 #!/usr/bin/env python2.7
-# Copyright (C) 2014 Job Snijders <job@ntt.net>
+# Copyright (C) 2014 Job Snijders <job@instituut.net>
 #
 # This file is part of aggregate6
 #
@@ -60,10 +60,11 @@ def aggregate(tree):
     for prefix in prefixes[:-1]:
         # current prefix
         cp = IPNetwork(prefix)
-        # fetch next prefix
+        # bail out if we have ::/0
         if int(cp.broadcast) == 2 ** 128 - 1:
             r_tree.add(str(cp))
             continue
+        # fetch next prefix
         np = IPNetwork(prefixes[prefixes.index(prefix) + 1])
         if cp.broadcast + 1 == np.network and cp.prefixlen == np.prefixlen:
                 larger = IPNetwork('%s/%s' % (cp.network, cp.prefixlen - 1))

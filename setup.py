@@ -1,5 +1,5 @@
 #!/usr/bin/env python
-# Copyright (C) 2014 Job Snijders <job@ntt.net>
+# Copyright (C) 2014 Job Snijders <job@instituut.net>
 #
 # This file is part of aggregate6
 #
@@ -64,7 +64,7 @@ setup(
     name='aggregate6',
     version=version,
     maintainer="Job Snijders",
-    maintainer_email='job@ntt.net',
+    maintainer_email='job@instituut.net',
     url='https://github.com/job/aggregate6',
     description='IPv6 prefix list compressor',
     long_description=README,
