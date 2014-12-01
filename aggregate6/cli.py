@@ -50,18 +50,23 @@ def aggregate(tree):
     if len(prefixes) == 1:
         return tree
     r_tree = radix.Radix()
-    for p in prefixes[:-1]:
-        cp = IPNetwork(p)
-        np = IPNetwork(prefixes[prefixes.index(p) + 1])
+    # test 1: can we join adjacent prefixes into larger prefixes?
+    for prefix in prefixes[:-1]:
+        # current prefix
+        cp = IPNetwork(prefix)
+        # fetch next prefix
+        np = IPNetwork(prefixes[prefixes.index(prefix) + 1])
         if cp.broadcast + 1 == np.network and cp.prefixlen == np.prefixlen:
                 larger = IPNetwork('%s/%s' % (cp.network, cp.prefixlen - 1))
                 r_tree.add(str(larger))
-        elif tree.search_worst(p).prefix in [p, None]:
-            r_tree.add(p)
-    if len(tree.prefixes()) > 1:
-        lp = r_tree.search_worst(prefixes[-1])
-        if lp:
-            if lp.prefix == prefixes[-1]:
+        # test 2: is the prefix already covered?
+        elif tree.search_worst(prefix).prefix in [prefix, None]:
+            r_tree.add(prefix)
+    # test 2: is the prefix already covered? (for last item)
+    if len(prefixes) > 1:
+        last = r_tree.search_worst(prefixes[-1])
+        if last:
+            if last.prefix == prefixes[-1]:
                 r_tree.add(prefixes[-1])
         else:
             r_tree.add(prefixes[-1])
