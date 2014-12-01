@@ -85,6 +85,8 @@ def main():
     p_tree = radix.Radix()
 
     for elem in fileinput.input(args.args):
+        if not elem.strip():
+            continue
         try:
             prefix = str(IPNetwork(elem.strip()))
         except ValueError:
