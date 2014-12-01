@@ -68,8 +68,7 @@ def aggregate(tree):
     return r_tree
 
 
-if __name__ == '__main__':
-
+def main():
     parser = argparse.ArgumentParser()
     parser.add_argument('args', nargs=argparse.REMAINDER,
                         help='<file> [ ... <file> ] or STDIN')
@@ -98,3 +97,7 @@ if __name__ == '__main__':
     # print results
     for prefix in p_tree.prefixes():
         print prefix
+
+
+if __name__ == '__main__':
+    main()

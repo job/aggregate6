@@ -22,7 +22,8 @@
 # SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS
 # INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN
 # CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
-# ARISING IN ANY WAY OUT OF TH
+# ARISING IN ANY WAY OUT OF  THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
+# POSSIBILITY OF SUCH DAMAGE.
 
 import aggregate6
 version = aggregate6.__version__
@@ -77,6 +78,7 @@ setup(
         'Programming Language :: Python :: 2.7',
     ],
     setup_requires=reqs,
+    install_requires=reqs,
     packages=find_packages(exclude=['tests', 'tests.*']),
     entry_points={'console_scripts': ['aggregate6 = aggregate6.cli:main']},
     data_files=get_data_files()
