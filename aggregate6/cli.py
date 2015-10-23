@@ -40,8 +40,7 @@ try:
     import radix
 except ImportError:
     print("ERROR: radix missing")
-    print("HINT: pip install \
-https://github.com/mjschultz/py-radix/archive/v0.7.0.zip")
+    print("HINT: pip install py-radix")
     sys.exit(2)
 
 
@@ -59,12 +58,10 @@ def aggregate(tree):
             r_tree.add(str(cp))
             continue
         # fetch next prefix
+        # FIXME
         np = ip_network(prefixes[prefixes.index(prefix) + 1])
-        if cp.broadcast_address + 1 == np.network_address \
-                and cp.prefixlen == np.prefixlen:
-                larger = ip_network('%s/%s'
-                                    % (cp.network_address, cp.prefixlen - 1))
-                r_tree.add(str(larger))
+        if cp.supernet().address_exclude(cp) == np:
+            r_tree.add(str(cp.supernet()))
         # test 2: is the prefix already covered?
         elif tree.search_worst(prefix).prefix in [prefix, None]:
             r_tree.add(prefix)
