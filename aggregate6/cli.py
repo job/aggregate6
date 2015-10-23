@@ -1,5 +1,5 @@
-#!/usr/bin/env python2.7
-# Copyright (C) 2014 Job Snijders <job@instituut.net>
+#!/usr/bin/env python
+# Copyright (C) 2014-2015 Job Snijders <job@instituut.net>
 #
 # This file is part of aggregate6
 #
@@ -26,28 +26,22 @@
 # POSSIBILITY OF SUCH DAMAGE.
 
 import fileinput
+from ipaddress import ip_network
 import sys
 
 try:
     import argparse
 except ImportError:
-    print "ERROR: install argparse manually"
-    print "HINT: sudo pip install argparse"
-    sys.exit(2)
-
-try:
-    from ipaddr import IPNetwork
-except ImportError:
-    print "ERROR: ipaddr missing"
-    print "HINT: pip install ipaddr"
+    print("ERROR: install argparse manually")
+    print("HINT: sudo pip install argparse")
     sys.exit(2)
 
 try:
     import radix
 except ImportError:
-    print "ERROR: radix missing"
-    print "HINT: pip install \
-https://github.com/mjschultz/py-radix/archive/v0.7.0.zip"
+    print("ERROR: radix missing")
+    print("HINT: pip install \
+https://github.com/mjschultz/py-radix/archive/v0.7.0.zip")
     sys.exit(2)
 
 
@@ -59,15 +53,17 @@ def aggregate(tree):
     # test 1: can we join adjacent prefixes into larger prefixes?
     for prefix in prefixes[:-1]:
         # current prefix
-        cp = IPNetwork(prefix)
+        cp = ip_network(prefix)
         # bail out if we have ::/0
-        if int(cp.broadcast) == 2 ** 128 - 1:
+        if cp == "::/0":
             r_tree.add(str(cp))
             continue
         # fetch next prefix
-        np = IPNetwork(prefixes[prefixes.index(prefix) + 1])
-        if cp.broadcast + 1 == np.network and cp.prefixlen == np.prefixlen:
-                larger = IPNetwork('%s/%s' % (cp.network, cp.prefixlen - 1))
+        np = ip_network(prefixes[prefixes.index(prefix) + 1])
+        if cp.broadcast_address + 1 == np.network_address \
+                and cp.prefixlen == np.prefixlen:
+                larger = ip_network('%s/%s'
+                                    % (cp.network_address, cp.prefixlen - 1))
                 r_tree.add(str(larger))
         # test 2: is the prefix already covered?
         elif tree.search_worst(prefix).prefix in [prefix, None]:
@@ -97,7 +93,7 @@ will be discarded prior to processing.")
 
     if args.version:
         import aggregate6
-        print "aggregate6 %s" % aggregate6.__version__
+        print("aggregate6 %s" % aggregate6.__version__)
         sys.exit()
 
     p_tree = radix.Radix()
@@ -106,12 +102,12 @@ will be discarded prior to processing.")
         if not elem.strip():
             continue
         try:
-            prefix = str(IPNetwork(elem.strip()))
+            prefix = str(ip_network(elem.strip()))
         except ValueError:
             sys.stderr.write("ERROR: '%s' is not a valid IPv6 network, \
     ignoring.\n" % elem.strip())
             continue
-        prefix_obj = IPNetwork(prefix)
+        prefix_obj = ip_network(prefix)
         if prefix_obj.version == 6 and \
                 prefix_obj.prefixlen <= args.maximum_length:
             p_tree.add(prefix)
@@ -126,7 +122,7 @@ will be discarded prior to processing.")
 
     # print results
     for prefix in p_tree.prefixes():
-        print prefix
+        print(prefix)
 
 
 if __name__ == '__main__':

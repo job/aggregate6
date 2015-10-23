@@ -32,7 +32,6 @@ import codecs
 import os
 import sys
 
-from pip.req import parse_requirements
 from setuptools import setup, find_packages
 from os.path import abspath, dirname, join
 
@@ -48,14 +47,11 @@ if sys.argv[-1] == 'publish':
     print("  git push --tags")
     sys.exit()
 
-install_reqs = parse_requirements('requirements.txt')
-reqs = [str(ir.req) for ir in install_reqs]
-
 
 def get_data_files():
     man_path = '/usr/share/man/man7'
     if os.getenv('TRAVIS_BUILD_ID'):
-        print "not installing manpage in travis environment"
+        print("not installing manpage in travis environment")
     elif os.path.exists(man_path):
         files = [(man_path, ['aggregate6/aggregate6.7'])]
         return files
@@ -75,10 +71,10 @@ setup(
         'Topic :: Software Development :: Libraries :: Python Modules',
         'Topic :: System :: Networking',
         'License :: OSI Approved :: BSD License',
-        'Programming Language :: Python :: 2.7',
+        'Programming Language :: Python :: 3 :: Only'
     ],
-    setup_requires=reqs,
-    install_requires=reqs,
+    setup_requires=["py-radix"],
+    install_requires=["py-radix"],
     packages=find_packages(exclude=['tests', 'tests.*']),
     entry_points={'console_scripts': ['aggregate6 = aggregate6.cli:main']},
     data_files=get_data_files()
