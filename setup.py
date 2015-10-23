@@ -1,5 +1,5 @@
-#!/usr/bin/env python
-# Copyright (C) 2014 Job Snijders <job@instituut.net>
+#!/usr/bin/env python3
+# Copyright (C) 2014-2017 Job Snijders <job@instituut.net>
 #
 # This file is part of aggregate6
 #
@@ -41,7 +41,7 @@ with codecs.open(join(here, 'README.md'), encoding='utf-8') as f:
     README = f.read()
 
 if sys.argv[-1] == 'publish':
-    os.system('python2.7 setup.py sdist upload')
+    os.system('python3.6 setup.py sdist upload')
     print("You probably want to also tag the version now:")
     print("  git tag -a %s -m 'version %s'" % (version, version))
     print("  git push --tags")
@@ -62,10 +62,10 @@ setup(
     maintainer="Job Snijders",
     maintainer_email='job@instituut.net',
     url='https://github.com/job/aggregate6',
-    description='IPv6 prefix list compressor',
+    description='IPv4 and IPv6 prefix list compressor',
     long_description=README,
     license='BSD 2-Clause',
-    keywords='ipv6 prefix routing networking',
+    keywords='ipv4 and ipv6 prefix routing networking',
     classifiers=[
         'Intended Audience :: Developers',
         'Topic :: Software Development :: Libraries :: Python Modules',
@@ -76,6 +76,6 @@ setup(
     setup_requires=["py-radix"],
     install_requires=["py-radix"],
     packages=find_packages(exclude=['tests', 'tests.*']),
-    entry_points={'console_scripts': ['aggregate6 = aggregate6.cli:main']},
+    entry_points={'console_scripts': ['aggregate6 = aggregate6.aggregate6:main']},
     data_files=get_data_files()
 )

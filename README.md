@@ -1,7 +1,7 @@
 aggregate6
 ==========
 
-aggregate6 will compress an unsorted list of IPv6 prefixes.
+aggregate6 will compress an unsorted list of IP (both IPv4 and IPv6) prefixes.
 
 DESCRIPTION
 -----------
@@ -22,15 +22,14 @@ INSTALLATION
 ------------
 
 ```
-    $ sudo apt-get install python-dev
-    $ sudo pip install aggregate6
+    $ pip install aggregate6
 ```
 
 USAGE
 -----
 
-Either provide the list of IPv6 prefixes on STDIN, or give filenames containing
-lists of IPv6 prefixes as arguments.
+Either provide the list of IPv4 and IPv prefixes on STDIN, or give filenames
+containing lists of IPv6 prefixes as arguments.
 
 ```
     $ cat prefix_list | aggregate6
@@ -53,7 +52,7 @@ Please report bugs at: https://github.com/job/aggregate6
 Copyright and License
 ---------------------
 
-Copyright (c) 2014, Job Snijders <job@instituut.net>. All rights reserved.
+Copyright (c) 2014-2017, Job Snijders <job@instituut.net>. All rights reserved.
 
 Redistribution and use in source and binary forms, with or without
 modification, are permitted provided that the following conditions are met:
