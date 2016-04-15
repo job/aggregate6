@@ -90,7 +90,7 @@ will be discarded prior to processing.")
 
     if args.version:
         import aggregate6
-        print("aggregate6 %s" % aggregate6.__version__)
+        print(("aggregate6 %s" % aggregate6.__version__))
         sys.exit()
 
     p_tree = radix.Radix()

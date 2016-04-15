@@ -43,7 +43,7 @@ with codecs.open(join(here, 'README.md'), encoding='utf-8') as f:
 if sys.argv[-1] == 'publish':
     os.system('python2.7 setup.py sdist upload')
     print("You probably want to also tag the version now:")
-    print("  git tag -a %s -m 'version %s'" % (version, version))
+    print(("  git tag -a %s -m 'version %s'" % (version, version)))
     print("  git push --tags")
     sys.exit()
 
