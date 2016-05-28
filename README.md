@@ -23,7 +23,14 @@ INSTALLATION
 
 ```
     $ sudo apt install python-dev python-pip python-setuptools
+    $ git clone https://github.com/job/aggregate6
+    $ cd aggregate6
+    $ sudo pip install .
+
+or
+
     $ sudo pip install aggregate6
+
 ```
 
 USAGE
