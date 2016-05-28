@@ -29,7 +29,7 @@ INSTALLATION
 
 or
 
-    $ sudo pip install aggregate6
+    $ sudo pip3 install aggregate6
 
 ```
 
