@@ -22,7 +22,7 @@ INSTALLATION
 ------------
 
 ```
-    $ sudo apt-get install python-dev
+    $ sudo apt install python-dev python-pip python-setuptools
     $ sudo pip install aggregate6
 ```
 
