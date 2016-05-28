@@ -22,10 +22,10 @@ INSTALLATION
 ------------
 
 ```
-    $ sudo apt install python-dev python-pip python-setuptools
+    $ sudo apt install python-dev python-pip3 python-setuptools
     $ git clone https://github.com/job/aggregate6
     $ cd aggregate6
-    $ sudo pip install .
+    $ sudo pip3 install .
 
 or
 
