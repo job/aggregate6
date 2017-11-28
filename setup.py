@@ -78,7 +78,9 @@ setup(
         'Programming Language :: Python :: 3.6'
     ],
     setup_requires=["nose", "coverage"],
-    install_requires=["py-radix"],
+    install_requires=["py-radix"] + (
+        ["future", "ipaddress"] if sys.version_info.major == 2 else []
+    ),
     packages=find_packages(exclude=['tests', 'tests.*']),
     entry_points={'console_scripts':
                   ['aggregate6 = aggregate6.aggregate6:main']},
