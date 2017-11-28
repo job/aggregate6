@@ -1,4 +1,4 @@
-#!/usr/bin/env python3
+#!/usr/bin/env python
 # Copyright (C) 2014-2017 Job Snijders <job@instituut.net>
 #
 # This file is part of aggregate6
@@ -73,12 +73,15 @@ setup(
         'Topic :: Software Development :: Libraries :: Python Modules',
         'Topic :: System :: Networking',
         'License :: OSI Approved :: BSD License',
-        'Programming Language :: Python :: 3 :: Only'
+        'Programming Language :: Python :: 2.7',
+        'Programming Language :: Python :: 3',
+        'Programming Language :: Python :: 3.6'
     ],
     setup_requires=["nose", "coverage"],
     install_requires=["py-radix"],
     packages=find_packages(exclude=['tests', 'tests.*']),
-    entry_points={'console_scripts': ['aggregate6 = aggregate6.aggregate6:main']},
+    entry_points={'console_scripts':
+                  ['aggregate6 = aggregate6.aggregate6:main']},
     data_files=get_data_files(),
     test_suite='nose.collector'
 )
