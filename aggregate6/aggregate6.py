@@ -1,4 +1,4 @@
-#!/usr/bin/env python3
+#!/usr/bin/env python
 # Copyright (C) 2014-2017 Job Snijders <job@instituut.net>
 #
 # This file is part of aggregate6
@@ -25,11 +25,16 @@
 # ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
 # POSSIBILITY OF SUCH DAMAGE.
 
+from __future__ import print_function
+from __future__ import unicode_literals
+
+from builtins import str as text
 from ipaddress import ip_network
 
 import aggregate6
 import radix
 import sys
+
 
 def aggregate(l):
     tree = radix.Radix()
@@ -51,7 +56,7 @@ def aggregate_tree(l_tree):
     def _aggregate_phase2(tree):
         n_tree = radix.Radix()
         for rnode in tree:
-            p = str(ip_network(rnode.prefix).supernet())
+            p = text(ip_network(rnode.prefix).supernet())
             r = tree.search_covered(p)
             if len(r) == 2:
                 if r[0].prefixlen == r[1].prefixlen == rnode.prefixlen:
@@ -76,22 +81,6 @@ def aggregate_tree(l_tree):
             del r_tree
 
     return l_tree
-
-
-
-#    # test 1: can we join adjacent prefixes into larger prefixes?
-#    for prefix in prefixes[:-1]:
-#        # current prefix
-#        cp = ip_network(prefix)
-#        # bail out if we have ::/0
-#        if cp == "::/0" or cp == "0.0.0.0/0":
-#            r_tree.add(str(cp))
-#            continue
-#        # fetch next prefix
-#        # FIXME
-#        np = ip_network(prefixes[prefixes.index(prefix) + 1])
-#        if cp.supernet().address_exclude(cp) == np:
-#            r_tree.add(str(cp.supernet()))
 
 
 def main():
@@ -122,23 +111,24 @@ Project website: https://github.com/job/aggregate6
 
     p_tree = radix.Radix()
 
-    for elem in fileinput.input(args.args):
-        if not elem.strip():
+    for line in fileinput.input(args.args):
+        if not line.strip():
             continue
-        try:
-            prefix = str(ip_network(elem.strip()))
-        except ValueError:
-            sys.stderr.write("ERROR: '%s' is not a valid IP network, \
-    ignoring.\n" % elem.strip())
-            continue
-        prefix_obj = ip_network(prefix)
+        for elem in line.strip().split():
+            try:
+                prefix_obj = ip_network(text(elem.strip()))
+                prefix = text(prefix_obj)
+            except ValueError:
+                sys.stderr.write("ERROR: '%s' is not a valid IP network, \
+ignoring.\n" % elem.strip())
+                continue
 
-        if args.ipv4_only and prefix_obj.version == 4:
-            p_tree.add(prefix)
-        elif args.ipv6_only and prefix_obj.version == 6:
-            p_tree.add(prefix)
-        elif not args.ipv4_only and not args.ipv6_only:
-            p_tree.add(prefix)
+            if args.ipv4_only and prefix_obj.version == 4:
+                p_tree.add(prefix)
+            elif args.ipv6_only and prefix_obj.version == 6:
+                p_tree.add(prefix)
+            elif not args.ipv4_only and not args.ipv6_only:
+                p_tree.add(prefix)
 
     for prefix in aggregate_tree(p_tree).prefixes():
         print(prefix)
