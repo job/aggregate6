@@ -8,7 +8,7 @@ python:
   - "3.6"
 
 install:
-  - pip install --use-mirrors coveralls 
+  - pip install coveralls 
   - python setup.py install
 
 script:
