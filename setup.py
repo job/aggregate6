@@ -52,8 +52,8 @@ if sys.argv[-1] == 'publish':
 
 def get_data_files():
     man_path = '/usr/share/man/man7'
-    if os.getenv('TRAVIS_BUILD_ID'):
-        print("not installing manpage in travis environment")
+    if os.getenv('TRAVIS_BUILD_ID') or os.getenv('VIRTUAL_ENV'):
+        print("not installing manpage in non-global environment")
     elif os.path.exists(man_path):
         files = [(man_path, ['aggregate6/aggregate6.7'])]
         return files
