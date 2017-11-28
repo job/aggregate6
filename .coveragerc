@@ -6,7 +6,7 @@ source = .
 [report]
 omit =
   */python?.?/*
-  */site-packages/nose/*
+  */site-packages/*
   *__init__*
   setup.py
   aggregate6/__init__.py
