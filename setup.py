@@ -25,17 +25,19 @@
 # ARISING IN ANY WAY OUT OF  THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
 # POSSIBILITY OF SUCH DAMAGE.
 
-import aggregate6
-version = aggregate6.__version__
-
 import codecs
 import os
+import re
 import sys
 
 from setuptools import setup, find_packages
 from os.path import abspath, dirname, join
 
 here = abspath(dirname(__file__))
+
+version = re.search('^__version__\s*=\s*"(.*)"',
+                    open('aggregate6/__init__.py').read(),
+                    re.M).group(1)
 
 with codecs.open(join(here, 'README.md'), encoding='utf-8') as f:
     README = f.read()
@@ -73,7 +75,7 @@ setup(
         'License :: OSI Approved :: BSD License',
         'Programming Language :: Python :: 3 :: Only'
     ],
-    setup_requires=["py-radix", "nose", "coverage"],
+    setup_requires=["nose", "coverage"],
     install_requires=["py-radix"],
     packages=find_packages(exclude=['tests', 'tests.*']),
     entry_points={'console_scripts': ['aggregate6 = aggregate6.aggregate6:main']},

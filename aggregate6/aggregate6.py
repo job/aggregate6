@@ -28,15 +28,8 @@
 from ipaddress import ip_network
 
 import aggregate6
+import radix
 import sys
-
-try:
-    import radix
-except ImportError:
-    print("ERROR: radix missing")
-    print("HINT: pip install py-radix")
-    sys.exit(2)
-
 
 def aggregate(l):
     tree = radix.Radix()
