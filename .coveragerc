@@ -1,0 +1,9 @@
+# .coveragerc to control coverage.py
+[run]
+branch = True
+source = .
+
+[report]
+omit =
+  setup.py
+  aggregate6/__init__.py
