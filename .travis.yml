@@ -8,11 +8,13 @@ python:
   - "3.6"
 
 install:
-  - pip install coveralls 
-  - python setup.py install
+  - pip install coveralls
+  - pip install coverage
+  - pip install nose
 
 script:
-  - python setup.py nosetests
+  - python setup.py install
+  - python setup.py nosetests --with-coverage
 
 after_success:
   - coveralls
