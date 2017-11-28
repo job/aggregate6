@@ -25,39 +25,49 @@ INSTALLATION
 ------------
 
 ```
-    $ pip install aggregate6
+$ pip install aggregate6
 ```
 
-USAGE
------
+CLI USAGE
+---------
 
 Either provide the list of IPv4 and IPv prefixes on STDIN, or give filenames
 containing lists of IPv6 prefixes as arguments.
 
 ```
-    $ # via STDIN
-    $ cat file_with_list_of_prefixes | aggregate6
-       ... output ...
+$ # via STDIN
+$ cat file_with_list_of_prefixes | aggregate6
+   ... output ...
 
-    $ # with a filename as argument
-    $ aggregate6 file_with_list_of_prefixes [ ... optional_other_prefix_lists ]
-       ... output ...
+$ # with a filename as argument
+$ aggregate6 file_with_list_of_prefixes [ ... optional_other_prefix_lists ]
+   ... output ...
 
-    $ # Whitespace separated works too
-    $ echo 2001:67c:208c::/48 2000::/3 | aggregate6
-    2000::/3
+$ # Whitespace separated works too
+$ echo 2001:67c:208c::/48 2000::/3 | aggregate6
+2000::/3
 
-    $ # You can combine IPv4 and IPv6
-    $ echo 10.0.0.0/16 10.0.0.0/24 2000::/3 | aggregate6
-    10.0.0.0/16
-    2000::/3
+$ # You can combine IPv4 and IPv6
+$ echo 10.0.0.0/16 10.0.0.0/24 2000::/3 | aggregate6
+10.0.0.0/16
+2000::/3
 
-    $ # Or display only a specific AFI
-    $ echo 10.0.0.0/16 10.0.0.0/24 2000::/3 | aggregate6 -4
-    10.0.0.0/16
+$ # Or display only a specific AFI
+$ echo 10.0.0.0/16 10.0.0.0/24 2000::/3 | aggregate6 -4
+10.0.0.0/16
 ```
 
-See ```aggregate6 -h``` for a full list of options.
+LIBRARY USAGE
+-------------
+
+```
+>>> import from aggregate6 import aggregate
+>>> aggregate(["10.0.0.0/8", "10.0.0.0/24"])
+['10.0.0.0/8']
+>>>
+```
+
+See `aggregate6 -h` for a full list of options.
 
 BUGS
 ----
