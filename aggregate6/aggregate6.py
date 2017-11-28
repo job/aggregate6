@@ -57,12 +57,16 @@ def aggregate_tree(l_tree):
 
     def _aggregate_phase2(tree):
         n_tree = radix.Radix()
-        for prefix in tree.prefixes():
-            p = str(ip_network(prefix).supernet())
-            if len(tree.search_covered(p)) == 2:
-                n_tree.add(p)
+        for rnode in tree:
+            p = str(ip_network(rnode.prefix).supernet())
+            r = tree.search_covered(p)
+            if len(r) == 2:
+                if r[0].prefixlen == r[1].prefixlen == rnode.prefixlen:
+                    n_tree.add(p)
+                else:
+                    n_tree.add(rnode.prefix)
             else:
-                n_tree.add(prefix)
+                n_tree.add(rnode.prefix)
         return n_tree
 
     l_tree = _aggregate_phase1(l_tree)
@@ -76,8 +80,10 @@ def aggregate_tree(l_tree):
             break
         else:
             l_tree = r_tree
+            del r_tree
 
     return l_tree
+
 
 
 #    # test 1: can we join adjacent prefixes into larger prefixes?

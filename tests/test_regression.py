@@ -27,13 +27,13 @@ class TestAggregate(unittest.TestCase):
         pfxs = []
         for i in range(5, 200):
             pfxs.append("{}.0.0.0/8".format(i))
-        outcome = ["5.0.0.0/8", "8.0.0.0/5", "16.0.0.0/4", "32.0.0.0/3",
-                   "64.0.0.0/2", "128.0.0.0/1", "192.0.0.0/5"]
+        outcome = ["5.0.0.0/8", "6.0.0.0/7", "8.0.0.0/5", "16.0.0.0/4",
+                   "32.0.0.0/3", "64.0.0.0/2", "128.0.0.0/2", "192.0.0.0/5"]
         self.assertEqual(aggregate(pfxs), outcome)
 
     def test_06__reduce_dups(self):
         self.assertEqual(aggregate(["2001:db8::/32", "2001:db8::/32"]),
-                                   ["2001:db8::/32"])
+                         ["2001:db8::/32"])
 
 
 def main():
