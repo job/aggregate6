@@ -1,1 +1,1 @@
-py-radix
+py-radix=0.10.0
