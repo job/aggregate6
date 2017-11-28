@@ -35,6 +35,10 @@ class TestAggregate(unittest.TestCase):
         self.assertEqual(aggregate(["2001:db8::/32", "2001:db8::/32"]),
                          ["2001:db8::/32"])
 
+    def test_07__non_ip_input(self):
+        with self.assertRaises(Exception) as context:
+            aggregate(["this_is_no_prefix", "10.0.0.0/24"])
+            self.assertTrue('ERROR, invalid IP prefix: this_is_no_prefix' in context.exception)
 
 def main():
     unittest.main()
