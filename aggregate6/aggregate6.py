@@ -56,7 +56,7 @@ def aggregate_tree(l_tree):
     def _aggregate_phase2(tree):
         n_tree = radix.Radix()
         for rnode in tree:
-            p = text(ip_network(rnode.prefix).supernet())
+            p = text(ip_network(text(rnode.prefix)).supernet())
             r = tree.search_covered(p)
             if len(r) == 2:
                 if r[0].prefixlen == r[1].prefixlen == rnode.prefixlen:
