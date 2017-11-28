@@ -73,9 +73,10 @@ setup(
         'License :: OSI Approved :: BSD License',
         'Programming Language :: Python :: 3 :: Only'
     ],
-    setup_requires=["py-radix"],
+    setup_requires=["py-radix", "nose", "coverage"],
     install_requires=["py-radix"],
     packages=find_packages(exclude=['tests', 'tests.*']),
     entry_points={'console_scripts': ['aggregate6 = aggregate6.aggregate6:main']},
-    data_files=get_data_files()
+    data_files=get_data_files(),
+    test_suite='nose.collector'
 )

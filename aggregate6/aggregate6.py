@@ -67,7 +67,6 @@ def aggregate_tree(l_tree):
 
     l_tree = _aggregate_phase1(l_tree)
 
-    # nothing to do
     if len(l_tree.prefixes()) == 1:
         return l_tree
 
