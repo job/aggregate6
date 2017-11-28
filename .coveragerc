@@ -8,5 +8,6 @@ omit =
   */python?.?/*
   */site-packages/*
   *__init__*
+  tests/*
   setup.py
   aggregate6/__init__.py
