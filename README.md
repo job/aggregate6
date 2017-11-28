@@ -1,7 +1,7 @@
 aggregate6
 ==========
 
-aggregate6 will compress an unsorted list of IP (both IPv4 and IPv6) prefixes.
+aggregate6 will compress an unsorted list of IP prefixes (both IPv4 and IPv6).
 
 DESCRIPTION
 -----------
