@@ -50,14 +50,6 @@ if sys.argv[-1] == 'publish':
     sys.exit()
 
 
-def get_data_files():
-    man_path = '/usr/share/man/man7'
-    if os.getenv('TRAVIS_BUILD_ID') or os.getenv('VIRTUAL_ENV'):
-        print("not installing manpage in non-global environment")
-    elif os.path.exists(man_path):
-        files = [(man_path, ['aggregate6/aggregate6.7'])]
-        return files
-
 setup(
     name='aggregate6',
     version=version,
@@ -84,6 +76,6 @@ setup(
     packages=find_packages(exclude=['tests', 'tests.*']),
     entry_points={'console_scripts':
                   ['aggregate6 = aggregate6.aggregate6:main']},
-    data_files=get_data_files(),
+    data_files = [('man/man7', ['aggregate6.7'])],
     test_suite='nose.collector'
 )
