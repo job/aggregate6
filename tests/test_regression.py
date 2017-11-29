@@ -1,7 +1,10 @@
 #!/usr/bin/env python
 
 from aggregate6 import aggregate
+from aggregate6.aggregate6 import parse_args
+
 import unittest
+
 
 class TestAggregate(unittest.TestCase):
 
@@ -39,6 +42,13 @@ class TestAggregate(unittest.TestCase):
         with self.assertRaises(Exception) as context:
             aggregate(["this_is_no_prefix", "10.0.0.0/24"])
             self.assertTrue('ERROR, invalid IP prefix: this_is_no_prefix' in context.exception)
+
+    def test_08__test_args_v4(self):
+        self.assertEqual(parse_args(["-4"]).ipv4_only, True)
+
+    def test_06__test_args_v4(self):
+        self.assertEqual(parse_args(["-6"]).ipv6_only, True)
+
 
 def main():
     unittest.main()

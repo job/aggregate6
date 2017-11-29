@@ -102,10 +102,8 @@ def aggregate_tree(l_tree):
     return l_tree
 
 
-def main():
+def parse_args(args):
     import argparse
-    import fileinput
-
     p = argparse.ArgumentParser(description="Aggregate lists of IP prefixes",
                                 epilog="""
 Copyright 2014-2017 Job Snijders <job@instituut.net>
@@ -122,7 +120,13 @@ Project website: https://github.com/job/aggregate6
                            help="Only output IPv6 prefixes")
     p.add_argument('args', nargs=argparse.REMAINDER,
                    help='[file ...] or STDIN')
-    args = p.parse_args()
+    return p.parse_args(args)
+
+
+def main():
+    import fileinput
+
+    args = parse_args(sys.argv[1:])
 
     if args.version:
         print("aggregate6 %s" % aggregate6.__version__)
