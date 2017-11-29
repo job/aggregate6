@@ -128,14 +128,14 @@ def main():
 
     args = parse_args(sys.argv[1:])
 
-    if args.version:
+    if args.version: # pragma: no cover
         print("aggregate6 %s" % aggregate6.__version__)
         sys.exit()
 
     p_tree = radix.Radix()
 
     for line in fileinput.input(args.args):
-        if not line.strip():
+        if not line.strip(): # pragma: no cover
             continue
         for elem in line.strip().split():
             try:

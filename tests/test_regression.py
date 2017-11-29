@@ -73,15 +73,19 @@ class TestAggregate(unittest.TestCase):
     def test_08__test_args_v4(self):
         self.assertEqual(parse_args(["-4"]).ipv4_only, True)
 
-    def test_09__test_args_v4(self):
-        self.assertEqual(parse_args(["-6"]).ipv6_only, True)
-
-    def test_10__main(self):
-        stub_stdin(self, '1.1.1.24/29\n1.1.1.0/24\n1.1.1.1/32\n1.1.0.0/24')
+    def test_09__main(self):
+        stub_stdin(self, '1.1.1.24/29\n1.1.1.0/24\n1.1.1.1/32\n1.1.0.0/24\n\n')
         stub_stdouts(self)
         with patch.object(sys, 'argv', [""]):
             agg_main()
         self.assertEqual(sys.stdout.getvalue(), '1.1.0.0/23\n')
+
+    def test_10__main(self):
+        stub_stdin(self, '2001:db8::/32\n2001:db8::/128\n10.0.0.0/8\n')
+        stub_stdouts(self)
+        with patch.object(sys, 'argv', ["prog.py", "-6"]):
+            agg_main()
+        self.assertEqual(sys.stdout.getvalue(), '2001:db8::/32\n')
 
 
 class StringIO(io.StringIO):
