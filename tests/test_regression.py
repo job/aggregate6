@@ -87,6 +87,15 @@ class TestAggregate(unittest.TestCase):
             agg_main()
         self.assertEqual(sys.stdout.getvalue(), '2001:db8::/32\n')
 
+    def test_11_main(self):
+        stub_stdin(self, 'not_a_prefix\n2001:db8::/32\n2001:db8::/128\n10.0.0.0/8\n10.1.2.3/32')
+        stub_stdouts(self)
+        with patch.object(sys, 'argv', ["prog.py", "-4"]):
+            agg_main()
+        self.assertEqual(sys.stdout.getvalue(), '10.0.0.0/8\n')
+        self.assertEqual(sys.stderr.getvalue(),
+                         "ERROR: 'not_a_prefix' is not a valid IP network, ignoring.\n")
+
 
 class StringIO(io.StringIO):
     """
