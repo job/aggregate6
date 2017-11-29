@@ -2,8 +2,35 @@
 
 from aggregate6 import aggregate
 from aggregate6.aggregate6 import parse_args
+from aggregate6.aggregate6 import main as agg_main
 
+from mock import patch
+import io
+import sys
 import unittest
+
+
+def stub_stdin(testcase_inst, inputs):
+    stdin = sys.stdin
+
+    def cleanup():
+        sys.stdin = stdin
+
+    testcase_inst.addCleanup(cleanup)
+    sys.stdin = StringIO(inputs)
+
+
+def stub_stdouts(testcase_inst):
+    stderr = sys.stderr
+    stdout = sys.stdout
+
+    def cleanup():
+        sys.stderr = stderr
+        sys.stdout = stdout
+
+    testcase_inst.addCleanup(cleanup)
+    sys.stderr = StringIO()
+    sys.stdout = StringIO()
 
 
 class TestAggregate(unittest.TestCase):
@@ -46,8 +73,29 @@ class TestAggregate(unittest.TestCase):
     def test_08__test_args_v4(self):
         self.assertEqual(parse_args(["-4"]).ipv4_only, True)
 
-    def test_06__test_args_v4(self):
+    def test_09__test_args_v4(self):
         self.assertEqual(parse_args(["-6"]).ipv6_only, True)
+
+    def test_10__main(self):
+        stub_stdin(self, '1.1.1.24/29\n1.1.1.0/24\n1.1.1.1/32\n1.1.0.0/24')
+        stub_stdouts(self)
+        with patch.object(sys, 'argv', [""]):
+            agg_main()
+        self.assertEqual(sys.stdout.getvalue(), '1.1.0.0/23\n')
+
+
+class StringIO(io.StringIO):
+    """
+    A "safely" wrapped version
+    """
+
+    def __init__(self, value=''):
+        value = value.encode('utf8', 'backslashreplace').decode('utf8')
+        io.StringIO.__init__(self, value)
+
+    def write(self, msg):
+        io.StringIO.write(self, msg.encode(
+            'utf8', 'backslashreplace').decode('utf8'))
 
 
 def main():
