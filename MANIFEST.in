@@ -1,3 +1,3 @@
 include README.md
-include aggregate6/aggregate6.7
+include aggregate6.7
 include requirements.txt
