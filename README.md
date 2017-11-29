@@ -57,6 +57,7 @@ $ # Or display only a specific AFI
 $ echo 10.0.0.0/16 10.0.0.0/24 2000::/3 | aggregate6 -4
 10.0.0.0/16
 ```
+See `aggregate6 -h` for a full list of options.
 
 LIBRARY USAGE
 -------------
@@ -68,9 +69,12 @@ LIBRARY USAGE
 >>>
 ```
 
-See `aggregate6 -h` for a full list of options.
-
 BUGS
 ----
 
-Please report bugs at: https://github.com/job/aggregate6/issues
+Please report bugs at https://github.com/job/aggregate6/issues
+
+AUTHOR
+------
+
+Job Snijders <job@instituut.net>
