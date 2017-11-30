@@ -22,6 +22,9 @@ a single, shorter-length prefix. For example, `2001:67c:208c::/48` and
 `2001:67c:208d::/48` can be combined into the single prefix
 `2001:67c:208c::/47`.
 
+The above optimalisation steps are often useful in context of compressing firewall
+rules or BGP prefix-list filters.
+
 INSTALLATION
 ------------
 

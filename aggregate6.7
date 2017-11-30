@@ -10,6 +10,9 @@ Takes a list of IPv6 prefixes in conventional format on stdin, and performs two 
 .P
 The second optimisation identifies adjacent prefixes that can be combined under a single, shorter\-length prefix\. For example, \fB2001:67c:208c::/48\fR and \fB2001:67c:208d::/48\fR can be combined into the single prefix \fB2001:67c:208c::/47\fR\.
 .
+.P
+The above optimalisation steps are often useful in context of compressing firewall rules or BGP prefix\-list filters\.
+.
 .SH "INSTALLATION"
 .
 .nf
