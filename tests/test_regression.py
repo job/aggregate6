@@ -96,6 +96,13 @@ class TestAggregate(unittest.TestCase):
         self.assertEqual(sys.stderr.getvalue(),
                          "ERROR: 'not_a_prefix' is not a valid IP network, ignoring.\n")
 
+    def test_12__use_space_in_stdin(self):
+        stub_stdin(self, '2001:db8::/32 2001:db8::/128\n10.0.0.0/8\n')
+        stub_stdouts(self)
+        with patch.object(sys, 'argv', ["prog.py", "-6"]):
+            agg_main()
+        self.assertEqual(sys.stdout.getvalue(), '2001:db8::/32\n')
+
 
 class StringIO(io.StringIO):
     """
