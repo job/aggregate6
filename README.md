@@ -35,7 +35,7 @@ $ pip install aggregate6
 CLI USAGE
 ---------
 
-Either provide the list of IPv4 and IPv prefixes on STDIN, or give filenames
+Either provide the list of IPv4 and IPv6 prefixes on STDIN, or give filenames
 containing lists of IPv6 prefixes as arguments.
 
 ```
