@@ -103,6 +103,14 @@ class TestAggregate(unittest.TestCase):
             agg_main()
         self.assertEqual(sys.stdout.getvalue(), '2001:db8::/32\n')
 
+    def test_13_truncate(self):
+        stub_stdin(self, '2001:db8::1/32 2001:db9::1/32\n10.5.5.5/8\n')
+        stub_stdouts(self)
+        with patch.object(sys, 'argv', ["prog.py", "-t"]):
+            agg_main()
+        self.assertEqual(sys.stdout.getvalue(), '10.0.0.0/8\n2001:db8::/31\n')
+
+
 
 class StringIO(io.StringIO):
     """
