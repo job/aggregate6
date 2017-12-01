@@ -65,7 +65,10 @@ def aggregate_tree(l_tree):
     """
 
     def _aggregate_phase1(tree):
-        # check if prefix is already covered
+        # phase1 removes any supplied prefixes which are superfluous because
+        # they are already included in another supplied prefix. For example,
+        # 2001:67c:208c:10::/64 would be removed if 2001:67c:208c::/48 was
+        # also supplied.
         n_tree = radix.Radix()
         for prefix in tree.prefixes():
             if tree.search_worst(prefix).prefix == prefix:
@@ -73,6 +76,10 @@ def aggregate_tree(l_tree):
         return n_tree
 
     def _aggregate_phase2(tree):
+        # phase2 identifies adjacent prefixes that can be combined under a
+        # single, shorter-length prefix. For example, 2001:67c:208c::/48 and
+        # 2001:67c:208d::/48 can be combined into the single prefix
+        # 2001:67c:208c::/47.
         n_tree = radix.Radix()
         for rnode in tree:
             p = text(ip_network(text(rnode.prefix)).supernet())
