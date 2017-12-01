@@ -51,7 +51,7 @@ def aggregate(l):
         try:
             tree.add(item)
         except (ValueError) as err:
-            print("ERROR, invalid IP prefix: {}".format(item))
+            sys.stderr.write("ERROR, invalid IP prefix: {}".format(item))
             raise
 
     return aggregate_tree(tree).prefixes()
