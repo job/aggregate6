@@ -29,7 +29,7 @@ from __future__ import print_function
 from __future__ import unicode_literals
 
 from builtins import str as text
-from ipaddress import ip_network
+from ipaddress import ip_network, ip_interface
 
 import aggregate6
 import radix
@@ -51,7 +51,7 @@ def aggregate(l):
         try:
             tree.add(item)
         except (ValueError) as err:
-            print("ERROR, invalid IP prefix: {}".format(item))
+            sys.stderr.write("ERROR, invalid IP prefix: {}".format(item))
             raise
 
     return aggregate_tree(tree).prefixes()
@@ -118,6 +118,8 @@ Project website: https://github.com/job/aggregate6
 """, formatter_class=argparse.RawTextHelpFormatter)
     p.add_argument('-v', dest='version', action='store_true',
                    help="Display aggregate6 version")
+    p.add_argument('-t', dest='truncate', action='store_true',
+                   help="truncate IP/mask to network/mask")
     afi_group = p.add_mutually_exclusive_group()
     afi_group.add_argument('-4', dest='ipv4_only', action='store_true',
                            default=False,
@@ -146,7 +148,10 @@ def main():
             continue
         for elem in line.strip().split():
             try:
-                prefix_obj = ip_network(text(elem.strip()))
+                if args.truncate:
+                    prefix_obj = ip_interface(text(elem.strip())).network
+                else:
+                    prefix_obj = ip_network(text(elem.strip()))
                 prefix = text(prefix_obj)
             except ValueError:
                 sys.stderr.write("ERROR: '%s' is not a valid IP network, \
