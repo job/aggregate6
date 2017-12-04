@@ -51,8 +51,7 @@ def aggregate(l):
         try:
             tree.add(item)
         except (ValueError) as err:
-            sys.stderr.write("ERROR, invalid IP prefix: {}".format(item))
-            raise
+            raise Exception("ERROR: invalid IP prefix: {}".format(item))
 
     return aggregate_tree(tree).prefixes()
 
@@ -120,6 +119,8 @@ Project website: https://github.com/job/aggregate6
                    help="Display aggregate6 version")
     p.add_argument('-t', dest='truncate', action='store_true',
                    help="truncate IP/mask to network/mask")
+    p.add_argument('-m', dest='max_length', metavar='N', type=int,
+                   default=0, help="truncate IP/mask to network/mask")
     afi_group = p.add_mutually_exclusive_group()
     afi_group.add_argument('-4', dest='ipv4_only', action='store_true',
                            default=False,
@@ -153,10 +154,14 @@ def main():
                 else:
                     prefix_obj = ip_network(text(elem.strip()))
                 prefix = text(prefix_obj)
-            except ValueError:
+            except (ValueError) as err:
                 sys.stderr.write("ERROR: '%s' is not a valid IP network, \
 ignoring.\n" % elem.strip())
                 continue
+
+            if args.max_length > 0:
+                if prefix_obj.prefixlen > args.max_length:
+                    continue
 
             if args.ipv4_only and prefix_obj.version == 4:
                 p_tree.add(prefix)

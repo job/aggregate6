@@ -66,9 +66,10 @@ class TestAggregate(unittest.TestCase):
                          ["2001:db8::/32"])
 
     def test_07__non_ip_input(self):
+        stub_stdouts(self)
         with self.assertRaises(Exception) as context:
             aggregate(["this_is_no_prefix", "10.0.0.0/24"])
-            self.assertTrue('ERROR, invalid IP prefix: this_is_no_prefix' in context.exception)
+        self.assertTrue('ERROR: invalid IP prefix: this_is_no_prefix' in str(context.exception))
 
     def test_08__test_args_v4(self):
         self.assertEqual(parse_args(["-4"]).ipv4_only, True)
@@ -110,6 +111,12 @@ class TestAggregate(unittest.TestCase):
             agg_main()
         self.assertEqual(sys.stdout.getvalue(), '10.0.0.0/8\n2001:db8::/31\n')
 
+    def test_14_maxlength(self):
+        stub_stdin(self, '10.0.0.0/24 10.0.1.0/25 10.0.1.128/25\n')
+        stub_stdouts(self)
+        with patch.object(sys, 'argv', ["prog.py", "-m", "24"]):
+            agg_main()
+        self.assertEqual(sys.stdout.getvalue(), '10.0.0.0/24\n')
 
 
 class StringIO(io.StringIO):
