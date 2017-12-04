@@ -116,7 +116,7 @@ Copyright 2014-2017 Job Snijders <job@instituut.net>
 Project website: https://github.com/job/aggregate6
 """, formatter_class=argparse.RawTextHelpFormatter)
     p.add_argument('-v', dest='verbose', action='store_true',
-                   help="Display verbose information about the optimisations")
+                   help="Display verbose information about the optimisations.")
     p.add_argument('-t', dest='truncate', action='store_true',
                    help="truncate IP/mask to network/mask")
     p.add_argument('-m', dest='max_length', metavar='N', type=int,
@@ -173,5 +173,17 @@ ignoring.\n" % elem.strip())
             elif not args.ipv4_only and not args.ipv6_only:
                 p_tree.add(prefix)
 
-    for prefix in aggregate_tree(p_tree).prefixes():
-        print(prefix)
+    if args.verbose:
+        input_list = p_tree.prefixes()
+        output_list = aggregate_tree(p_tree).prefixes()
+        for p in sorted(set(input_list + output_list)):
+            if p in input_list and p not in output_list:
+                print("- ", end='')
+            elif p in output_list and p not in input_list:
+                print("+ ", end='')
+            else:
+                print("  ", end='')
+            print(p)
+    else:
+        for prefix in aggregate_tree(p_tree).prefixes():
+            print(prefix)

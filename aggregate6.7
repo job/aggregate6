@@ -4,7 +4,7 @@
 .TH "AGGREGATE6" "7" "December 2017" "" ""
 aggregate6 will compress an unsorted list of IP prefixes (both IPv4 and IPv6)\.
 .
-.SH "DESCRIPTION"
+.SH "Description"
 Takes a list of IPv6 prefixes in conventional format on stdin, and performs two optimisations to attempt to reduce the length of the prefix list\. The first optimisation is to remove any supplied prefixes which are superfluous because they are already included in another supplied prefix\. For example, \fB2001:67c:208c:10::/64\fR would be removed if \fB2001:67c:208c::/48\fR was also supplied\.
 .
 .P
@@ -13,16 +13,39 @@ The second optimisation identifies adjacent prefixes that can be combined under 
 .P
 The above optimalisation steps are often useful in context of compressing firewall rules or BGP prefix\-list filters\.
 .
-.SH "INSTALLATION"
+.P
+The following command line options are available:
+.
+.IP "" 4
 .
 .nf
 
-$ pip install aggregate6
+    \-4          Only output IPv4 prefixes
+    \-6          Only output IPv6 prefixes
+    \-h, \-\-help  show help message and exit
+    \-m N        Sets the maximum prefix length for entries read, longer prefixes will be discarded prior to processing
+    \-t          truncate IP/mask to network/mask
+    \-v          Display verbose information about the optimisations
+    \-V          Display aggregate6 version
 .
 .fi
 .
-.SH "CLI USAGE"
-Either provide the list of IPv4 and IPv6 prefixes on STDIN, or give filenames containing lists of IPv6 prefixes as arguments\.
+.IP "" 0
+.
+.SH "Installation"
+OpenBSD 6\.3:
+.
+.P
+\fB$ doas pkg_add aggregate6\fR
+.
+.P
+Other platforms:
+.
+.P
+\fB$ pip3 install aggregate6\fR
+.
+.SH "CLI Usage"
+Either provide the list of IPv4 and IPv6 prefixes on STDIN, or give filenames containing lists of IPv4 and IPv6 prefixes as arguments\.
 .
 .IP "" 4
 .
@@ -44,19 +67,15 @@ $ # You can combine IPv4 and IPv6
 $ echo 10\.0\.0\.0/16 10\.0\.0\.0/24 2000::/3 | aggregate6
 10\.0\.0\.0/16
 2000::/3
-
-$ # Or display only a specific AFI
-$ echo 10\.0\.0\.0/16 10\.0\.0\.0/24 2000::/3 | aggregate6 \-4
-10\.0\.0\.0/16
 .
 .fi
 .
 .IP "" 0
 .
-.P
-See \fBaggregate6 \-h\fR for a full list of options\.
+.SH "Library Usage"
+Aggregate6 can be used in your own pyp/python2/python3 project as python module\. Currently there is just one simple public function: \fBaggregate()\fR which takes a list as parameter\.
 .
-.SH "LIBRARY USAGE"
+.IP "" 4
 .
 .nf
 
@@ -67,8 +86,10 @@ See \fBaggregate6 \-h\fR for a full list of options\.
 .
 .fi
 .
-.SH "BUGS"
+.IP "" 0
+.
+.SH "Bugs"
 Please report bugs at https://github\.com/job/aggregate6/issues
 .
-.SH "AUTHOR"
+.SH "Author"
 Job Snijders \fIjob@instituut\.net\fR

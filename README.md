@@ -7,7 +7,7 @@ aggregate6
 
 aggregate6 will compress an unsorted list of IP prefixes (both IPv4 and IPv6).
 
-DESCRIPTION
+Description
 -----------
 
 Takes a list of IPv6 prefixes in conventional format on stdin, and performs two
@@ -25,18 +25,34 @@ a single, shorter-length prefix. For example, `2001:67c:208c::/48` and
 The above optimalisation steps are often useful in context of compressing firewall
 rules or BGP prefix-list filters.
 
-INSTALLATION
+The following command line options are available:
+
+```
+	-4          Only output IPv4 prefixes
+	-6          Only output IPv6 prefixes
+	-h, --help  show help message and exit
+	-m N        Sets the maximum prefix length for entries read, longer prefixes will be discarded prior to processing
+	-t          truncate IP/mask to network/mask
+	-v          Display verbose information about the optimisations
+	-V          Display aggregate6 version
+```
+
+Installation
 ------------
 
-```
-$ pip install aggregate6
-```
+OpenBSD 6.3:
 
-CLI USAGE
+`$ doas pkg_add aggregate6`
+
+Other platforms:
+
+`$ pip3 install aggregate6`
+
+CLI Usage
 ---------
 
 Either provide the list of IPv4 and IPv6 prefixes on STDIN, or give filenames
-containing lists of IPv6 prefixes as arguments.
+containing lists of IPv4 and IPv6 prefixes as arguments.
 
 ```
 $ # via STDIN
@@ -55,15 +71,14 @@ $ # You can combine IPv4 and IPv6
 $ echo 10.0.0.0/16 10.0.0.0/24 2000::/3 | aggregate6
 10.0.0.0/16
 2000::/3
-
-$ # Or display only a specific AFI
-$ echo 10.0.0.0/16 10.0.0.0/24 2000::/3 | aggregate6 -4
-10.0.0.0/16
 ```
-See `aggregate6 -h` for a full list of options.
 
-LIBRARY USAGE
+Library Usage
 -------------
+
+Aggregate6 can be used in your own pyp/python2/python3 project as python module.
+Currently there is just one simple public function: `aggregate()` which takes a
+list as parameter.
 
 ```
 >>> import from aggregate6 import aggregate
@@ -72,12 +87,12 @@ LIBRARY USAGE
 >>>
 ```
 
-BUGS
+Bugs
 ----
 
 Please report bugs at https://github.com/job/aggregate6/issues
 
-AUTHOR
+Author
 ------
 
 Job Snijders <job@instituut.net>
