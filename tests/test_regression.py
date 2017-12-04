@@ -118,6 +118,13 @@ class TestAggregate(unittest.TestCase):
             agg_main()
         self.assertEqual(sys.stdout.getvalue(), '10.0.0.0/24\n')
 
+    def test_15_verbose(self):
+        stub_stdin(self, '10.0.0.0/24 10.0.1.0/24 172.16.0.0/24 10.0.0.0/32\n')
+        stub_stdouts(self)
+        with patch.object(sys, 'argv', ["prog.py", "-v"]):
+            agg_main()
+        self.assertEqual(sys.stdout.getvalue(), "+ 10.0.0.0/23\n- 10.0.0.0/24\n- 10.0.0.0/32\n- 10.0.1.0/24\n  172.16.0.0/24\n")
+
 
 class StringIO(io.StringIO):
     """
