@@ -115,12 +115,15 @@ def parse_args(args):
 Copyright 2014-2017 Job Snijders <job@instituut.net>
 Project website: https://github.com/job/aggregate6
 """, formatter_class=argparse.RawTextHelpFormatter)
-    p.add_argument('-v', dest='version', action='store_true',
-                   help="Display aggregate6 version")
+    p.add_argument('-v', dest='verbose', action='store_true',
+                   help="Display verbose information about the optimisations")
     p.add_argument('-t', dest='truncate', action='store_true',
                    help="truncate IP/mask to network/mask")
     p.add_argument('-m', dest='max_length', metavar='N', type=int,
-                   default=0, help="truncate IP/mask to network/mask")
+                   default=0, help="Sets the maximum prefix length for \
+entries read. Longer prefixes will be discarded prior to processing.")
+    p.add_argument('-V', dest='version', action='store_true',
+                   help="Display aggregate6 version")
     afi_group = p.add_mutually_exclusive_group()
     afi_group.add_argument('-4', dest='ipv4_only', action='store_true',
                            default=False,
