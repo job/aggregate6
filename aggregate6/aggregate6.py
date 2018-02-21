@@ -28,7 +28,12 @@
 from __future__ import print_function
 from __future__ import unicode_literals
 
-from builtins import str as text
+try:
+    from builtins import str as text
+except:
+    # Python2.7 compatibility
+    from __builtin__ import unicode as text
+
 from ipaddress import ip_network, ip_interface
 
 import aggregate6
