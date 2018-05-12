@@ -58,7 +58,7 @@ def aggregate(l):
         except (ValueError) as err:
             raise Exception("ERROR: invalid IP prefix: {}".format(item))
 
-    return aggregate_tree(tree).prefixes()
+    return aggregate_tree(tree)
 
 
 def aggregate_tree(l_tree):
@@ -79,32 +79,29 @@ def aggregate_tree(l_tree):
                 n_tree.add(prefix)
         return n_tree
 
-    def _aggregate_phase2(tree):
+    def _aggregate_phase2(pfx_list):
         # phase2 identifies adjacent prefixes that can be combined under a
         # single, shorter-length prefix. For example, 2001:67c:208c::/48 and
         # 2001:67c:208d::/48 can be combined into the single prefix
         # 2001:67c:208c::/47.
-        n_tree = radix.Radix()
-        for rnode in tree:
-            p = text(ip_network(text(rnode.prefix)).supernet())
-            r = tree.search_covered(p)
-            if len(r) == 2:
-                if r[0].prefixlen == r[1].prefixlen == rnode.prefixlen:
-                    n_tree.add(p)
-                else:
-                    n_tree.add(rnode.prefix)
-            else:
-                n_tree.add(rnode.prefix)
-        return n_tree
+        new_list = []
+        for pfx in pfx_list:
+            super_pfx = ip_network(pfx).supernet()
+            comp = list(map(str, (super_pfx.subnets())))
+            if set(comp).issubset(pfx_list) and not str(super_pfx) in new_list:
+                new_list.append(str(super_pfx))
+            elif not pfx in new_list and not set(comp).issubset(pfx_list):
+                new_list.append(pfx)
+        return new_list
 
-    l_tree = _aggregate_phase1(l_tree)
+    l_tree = _aggregate_phase1(l_tree).prefixes()
 
-    if len(l_tree.prefixes()) == 1:
+    if len(l_tree) == 1:
         return l_tree
 
     while True:
         r_tree = _aggregate_phase2(l_tree)
-        if l_tree.prefixes() == r_tree.prefixes():
+        if l_tree == r_tree:
             break
         else:
             l_tree = r_tree
@@ -180,7 +177,7 @@ ignoring.\n" % elem.strip())
 
     if args.verbose:
         input_list = p_tree.prefixes()
-        output_list = aggregate_tree(p_tree).prefixes()
+        output_list = aggregate_tree(p_tree)
         for p in sorted(set(input_list + output_list)):
             if p in input_list and p not in output_list:
                 print("- ", end='')
@@ -190,5 +187,5 @@ ignoring.\n" % elem.strip())
                 print("  ", end='')
             print(p)
     else:
-        for prefix in aggregate_tree(p_tree).prefixes():
+        for prefix in aggregate_tree(p_tree):
             print(prefix)
