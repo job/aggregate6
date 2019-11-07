@@ -1,3 +1,4 @@
 include README.md
 include aggregate6.7
 include requirements.txt
+recursive-include tests *.py
