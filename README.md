@@ -81,7 +81,7 @@ Currently there is just one simple public function: `aggregate()` which takes a
 list as parameter.
 
 ```
->>> import from aggregate6 import aggregate
+>>> from aggregate6 import aggregate
 >>> aggregate(["10.0.0.0/8", "10.0.0.0/24"])
 ['10.0.0.0/8']
 >>>
