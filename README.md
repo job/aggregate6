@@ -50,7 +50,7 @@ Other platforms:
 
 On EL8 systems you must first install some prerequisites:
 
-`$ dnf install gcc platform-python-devel`
+`$ dnf install gcc install python3-devel platform-python-devel`
 
 CLI Usage
 ---------
