@@ -52,6 +52,10 @@ On EL8 systems you must first install some prerequisites:
 
 `$ dnf install gcc platform-python-devel`
 
+On EL7 systems you must first install some prerequisites:
+
+`$ yum install gcc python3 python3-devel`
+
 CLI Usage
 ---------
 
