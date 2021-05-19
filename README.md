@@ -48,6 +48,10 @@ Other platforms:
 
 `$ pip3 install aggregate6`
 
+On EL8 systems you must first install some prerequisites:
+
+`$ dnf install gcc platform-python-devel`
+
 CLI Usage
 ---------
 
