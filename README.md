@@ -1,4 +1,3 @@
-[![Build Status](https://travis-ci.org/job/aggregate6.svg?branch=master)](https://travis-ci.org/job/aggregate6)
 [![Requirements Status](https://requires.io/github/job/aggregate6/requirements.svg?branch=master)](https://requires.io/github/job/aggregate6/requirements/?branch=master)
 [![Coverage Status](https://coveralls.io/repos/github/job/aggregate6/badge.svg?branch=master)](https://coveralls.io/github/job/aggregate6?branch=master)
 
