@@ -4,7 +4,11 @@ from aggregate6 import aggregate
 from aggregate6.aggregate6 import parse_args
 from aggregate6.aggregate6 import main as agg_main
 
-from mock import patch
+try:
+    from unittest.mock import patch
+except ImportError:
+    from mock import patch
+
 import io
 import sys
 import unittest
