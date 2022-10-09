@@ -70,7 +70,7 @@ setup(
         'Programming Language :: Python :: 3',
         'Programming Language :: Python :: 3.6'
     ],
-    setup_requires=["nose", "coverage", "mock"],
+    tests_require=["mock;python_version<'3.3'", "coverage"],
     install_requires=["py-radix==0.10.0"] + (
         ["future", "ipaddress"] if sys.version_info.major == 2 else []
     ),
