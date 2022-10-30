@@ -35,7 +35,7 @@ from os.path import abspath, dirname, join
 
 here = abspath(dirname(__file__))
 
-version = re.search('^__version__\s*=\s*"(.*)"',
+version = re.search(r'^__version__\s*=\s*"(.*)"',
                     open('aggregate6/__init__.py').read(),
                     re.M).group(1)
 
@@ -82,6 +82,6 @@ setup(
     packages=find_packages(exclude=['tests', 'tests.*']),
     entry_points={'console_scripts':
                   ['aggregate6 = aggregate6.aggregate6:main']},
-    data_files = [('man/man7', ['aggregate6.7'])],
+    data_files=[('man/man7', ['aggregate6.7'])],
     test_suite='nose.collector'
 )
