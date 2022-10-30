@@ -28,7 +28,7 @@ jobs:
           # Stop the build if there are Python syntax errors or undefined names
           flake8 . --count --select=E9,F63,F7,F82 --show-source --statistics
           # For now, treat all errors as warnings using --exit-zero
-          flake8 . --count --exit-zero --max-complexity=10 --max-line-length=80 --statistics
+          flake8 . --count --exit-zero --max-complexity=10 --statistics
       - name: Set $PYTHONPATH
         run: echo "PYTHONPATH=/home/runner/work/aggregate6/aggregate6" >> $GITHUB_ENV
       - name: Test with pytest

@@ -73,7 +73,8 @@ class TestAggregate(unittest.TestCase):
         stub_stdouts(self)
         with self.assertRaises(Exception) as context:
             aggregate(["this_is_no_prefix", "10.0.0.0/24"])
-        self.assertTrue('ERROR: invalid IP prefix: this_is_no_prefix' in str(context.exception))
+        self.assertTrue('ERROR: invalid IP prefix: this_is_no_prefix' in
+                        str(context.exception))
 
     def test_08__test_args_v4(self):
         self.assertEqual(parse_args(["-4"]).ipv4_only, True)
@@ -93,13 +94,15 @@ class TestAggregate(unittest.TestCase):
         self.assertEqual(sys.stdout.getvalue(), '2001:db8::/32\n')
 
     def test_11_main(self):
-        stub_stdin(self, 'not_a_prefix\n2001:db8::/32\n2001:db8::/128\n10.0.0.0/8\n10.1.2.3/32')
+        stub_stdin(self, 'not_a_prefix\n2001:db8::/32\n2001:db8::/128\n'
+                   '10.0.0.0/8\n10.1.2.3/32')
         stub_stdouts(self)
         with patch.object(sys, 'argv', ["prog.py", "-4"]):
             agg_main()
         self.assertEqual(sys.stdout.getvalue(), '10.0.0.0/8\n')
         self.assertEqual(sys.stderr.getvalue(),
-                         "ERROR: 'not_a_prefix' is not a valid IP network, ignoring.\n")
+                         "ERROR: 'not_a_prefix' is not a valid IP network, "
+                         "ignoring.\n")
 
     def test_12__use_space_in_stdin(self):
         stub_stdin(self, '2001:db8::/32 2001:db8::/128\n10.0.0.0/8\n')
@@ -127,7 +130,9 @@ class TestAggregate(unittest.TestCase):
         stub_stdouts(self)
         with patch.object(sys, 'argv', ["prog.py", "-v"]):
             agg_main()
-        self.assertEqual(sys.stdout.getvalue(), "+ 10.0.0.0/23\n- 10.0.0.0/24\n- 10.0.0.0/32\n- 10.0.1.0/24\n  172.16.0.0/24\n")
+        self.assertEqual(sys.stdout.getvalue(), "+ 10.0.0.0/23\n- "
+                         "10.0.0.0/24\n- 10.0.0.0/32\n- 10.0.1.0/24\n  "
+                         "172.16.0.0/24\n")
 
 
 class StringIO(io.StringIO):
@@ -146,6 +151,7 @@ class StringIO(io.StringIO):
 
 def main():
     unittest.main()
+
 
 if __name__ == '__main__':
     main()
