@@ -85,30 +85,23 @@ def aggregate_tree(l_tree):
         # 2001:67c:208d::/48 can be combined into the single prefix
         # 2001:67c:208c::/47.
         n_tree = radix.Radix()
+        aggregations = 0
         for rnode in tree:
             p = text(ip_network(text(rnode.prefix)).supernet())
             r = tree.search_covered(p)
-            if len(r) == 2:
-                if r[0].prefixlen == r[1].prefixlen == rnode.prefixlen:
-                    n_tree.add(p)
-                else:
-                    n_tree.add(rnode.prefix)
+            if len(r) == 2 and r[0].prefixlen == r[1].prefixlen == rnode.prefixlen:
+                n_tree.add(p)
+                aggregations += 1
             else:
                 n_tree.add(rnode.prefix)
-        return n_tree
+        return aggregations, n_tree
 
     l_tree = _aggregate_phase1(l_tree)
 
-    if len(l_tree.prefixes()) == 1:
-        return l_tree
+    potential = len(l_tree.prefixes()) > 1:
 
-    while True:
-        r_tree = _aggregate_phase2(l_tree)
-        if l_tree.prefixes() == r_tree.prefixes():
-            break
-        else:
-            l_tree = r_tree
-            del r_tree
+    while potential:
+        potential, l_tree = _aggregate_phase2(l_tree)
 
     return l_tree
 
