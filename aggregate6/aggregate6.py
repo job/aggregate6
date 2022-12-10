@@ -98,7 +98,7 @@ def aggregate_tree(l_tree):
 
     l_tree = _aggregate_phase1(l_tree)
 
-    potential = len(l_tree.prefixes()) > 1:
+    potential = len(l_tree.prefixes())
 
     while potential:
         potential, l_tree = _aggregate_phase2(l_tree)
