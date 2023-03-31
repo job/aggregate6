@@ -49,7 +49,7 @@ Other platforms:
 
 On EL8 systems you must first install some prerequisites:
 
-`$ dnf install gcc install python3-devel platform-python-devel`
+`$ dnf install gcc python3-devel platform-python-devel`
 
 On EL7 systems you must first install some prerequisites:
 
