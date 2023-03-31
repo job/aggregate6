@@ -39,6 +39,8 @@ The following command line options are available:
 Installation
 ------------
 
+**Note:** Python 3.7 or newer is required since December 2022.
+
 OpenBSD 6.3:
 
 `$ doas pkg_add aggregate6`
@@ -49,11 +51,16 @@ Other platforms:
 
 On EL8 systems you must first install some prerequisites:
 
-`$ dnf install gcc python3-devel platform-python-devel`
+```
+$ dnf install gcc python39 python39-devel platform-python-devel
+$ pip3.9 install aggregate6
+```
 
 On EL7 systems you must first install some prerequisites:
 
 `$ yum install gcc python3 python3-devel`
+
+However, EL7 only has Python 3.6, so aggregate6 may no longer work on this platform.
 
 CLI Usage
 ---------
