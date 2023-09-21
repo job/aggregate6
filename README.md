@@ -39,21 +39,22 @@ The following command line options are available:
 Installation
 ------------
 
-OpenBSD 6.3:
+OpenBSD:
 
 `$ doas pkg_add aggregate6`
+
+CentOS/RHEL/Rocky:
+
+`$ yum install epel-release`  
+`$ yum install aggregate6`
+
+Fedora:
+
+`$ dnf install aggregate6`
 
 Other platforms:
 
 `$ pip3 install aggregate6`
-
-On EL8 systems you must first install some prerequisites:
-
-`$ dnf install gcc install python3-devel platform-python-devel`
-
-On EL7 systems you must first install some prerequisites:
-
-`$ yum install gcc python3 python3-devel`
 
 CLI Usage
 ---------
