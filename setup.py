@@ -39,7 +39,7 @@ version = re.search(r'^__version__\s*=\s*"(.*)"',
                     open('aggregate6/__init__.py').read(),
                     re.M).group(1)
 
-with codecs.open(join(here, 'README.md'), encoding='utf-8') as f:
+with codecs.open(join(here, 'README.rst'), encoding='utf-8') as f:
     README = f.read()
 
 if sys.argv[-1] == 'publish':
