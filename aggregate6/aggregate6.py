@@ -30,7 +30,7 @@ from __future__ import unicode_literals
 
 try:
     from builtins import str as text
-except:
+except ImportError:
     # Python2.7 compatibility
     from __builtin__ import unicode as text
 
@@ -41,21 +41,21 @@ import radix
 import sys
 
 
-def aggregate(l):
+def aggregate(prefixes):
     """Aggregate a `list` of prefixes.
 
     Keyword arguments:
-    l -- a python list of prefixes
+    prefixes -- a python list of prefixes
 
     Example use:
     >>> aggregate(["10.0.0.0/8", "10.0.0.0/24"])
     ['10.0.0.0/8']
     """
     tree = radix.Radix()
-    for item in l:
+    for item in prefixes:
         try:
             tree.add(item)
-        except (ValueError) as err:
+        except ValueError:
             raise Exception("ERROR: invalid IP prefix: {}".format(item))
 
     return aggregate_tree(tree).prefixes()
@@ -155,7 +155,7 @@ def main():
                 else:
                     prefix_obj = ip_network(text(elem.strip()))
                 prefix = text(prefix_obj)
-            except (ValueError) as err:
+            except ValueError:
                 sys.stderr.write("ERROR: '%s' is not a valid IP network, \
 ignoring.\n" % elem.strip())
                 continue
