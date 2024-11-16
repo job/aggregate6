@@ -74,7 +74,8 @@ setup(
         'Programming Language :: Python :: 3.9',
         'Programming Language :: Python :: 3.10',
         'Programming Language :: Python :: 3.11',
-        'Programming Language :: Python :: 3.12'
+        'Programming Language :: Python :: 3.12',
+        'Programming Language :: Python :: 3.13'
     ],
     tests_require=["mock;python_version<'3.3'", "coverage"],
     install_requires=["py-radix==0.10.0"] + (
