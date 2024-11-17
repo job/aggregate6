@@ -89,7 +89,8 @@ def aggregate_tree(l_tree):
         for rnode in tree:
             p = text(ip_network(text(rnode.prefix)).supernet())
             r = tree.search_covered(p)
-            if len(r) == 2 and r[0].prefixlen == r[1].prefixlen == rnode.prefixlen:
+            if len(r) == 2 \
+               and r[0].prefixlen == r[1].prefixlen == rnode.prefixlen:
                 n_tree.add(p)
                 aggregations += 1
             else:
