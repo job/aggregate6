@@ -45,8 +45,10 @@ jobs:
         run: |
           # Stop the build if there are Python syntax errors or undefined names
           flake8 . --count --select=E9,F63,F7,F82 --show-source --statistics
-          # For now, treat all errors as warnings using --exit-zero
-          flake8 . --count --exit-zero --max-complexity=10 --statistics
+          # For now, ignore F401 ('.aggregate6.aggregate' imported but unused)
+          # as, when removing the import, it at least breaks pytest, accept the
+          # max. complexity of 18 for main() - and just fail otherwise
+          flake8 . --count --ignore=F401 --max-complexity=18 --statistics
       - name: Set $PYTHONPATH
         run: echo "PYTHONPATH=$RUNNER_WORKSPACE/aggregate6" >> $GITHUB_ENV
       - name: Test with pytest
