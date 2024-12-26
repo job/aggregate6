@@ -78,7 +78,7 @@ setup(
         'Programming Language :: Python :: 3.13'
     ],
     tests_require=["mock;python_version<'3.3'", "coverage"],
-    install_requires=["py-radix==0.10.0"] + (
+    install_requires=["py-radix>=0.10.0"] + (
         ["future", "ipaddress"] if sys.version_info.major == 2 else []
     ),
     packages=find_packages(exclude=['tests', 'tests.*']),
